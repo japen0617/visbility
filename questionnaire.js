@@ -608,37 +608,48 @@ document.addEventListener('DOMContentLoaded', () => {
         downloadButton.style.visibility = 'hidden';
 
         html2canvas(reportElement, {
-            scale: 2, // Use higher scale for better image quality
-            useCORS: true, // Important for external images like the logo
+            scale: 1, // lower scale to reduce file size
+            useCORS: true,
             logging: false,
             windowWidth: reportElement.scrollWidth,
             windowHeight: reportElement.scrollHeight
         }).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
             const pdf = new jsPDF({
-                orientation: 'p', // portrait
+                orientation: 'p',
                 unit: 'mm',
                 format: 'a4'
             });
 
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = pdf.internal.pageSize.getHeight();
-            const canvasAspectRatio = canvas.width / canvas.height;
-            const imgHeight = pdfWidth / canvasAspectRatio;
 
-            let heightLeft = imgHeight;
-            let position = 0;
+            const pageHeightPx = canvas.width * (pdfHeight / pdfWidth);
+            let renderedHeight = 0;
+            const pageCanvas = document.createElement('canvas');
+            const pageCtx = pageCanvas.getContext('2d');
 
-            // Add the first page
-            pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
-            heightLeft -= pdfHeight;
+            while (renderedHeight < canvas.height) {
+                const remaining = canvas.height - renderedHeight;
+                pageCanvas.width = canvas.width;
+                pageCanvas.height = Math.min(pageHeightPx, remaining);
+                pageCtx.clearRect(0, 0, pageCanvas.width, pageCanvas.height);
+                pageCtx.drawImage(
+                    canvas,
+                    0,
+                    renderedHeight,
+                    canvas.width,
+                    pageCanvas.height,
+                    0,
+                    0,
+                    canvas.width,
+                    pageCanvas.height
+                );
 
-            // Add new pages if the content is longer than one page
-            while (heightLeft > 0) {
-                position = -heightLeft; // Move the image "up" on the new page
-                pdf.addPage();
-                pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
-                heightLeft -= pdfHeight;
+                const imgData = pageCanvas.toDataURL('image/jpeg', 0.8);
+                if (renderedHeight > 0) pdf.addPage();
+                pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+
+                renderedHeight += pageHeightPx;
             }
 
             pdf.save('可視化控管評估報告.pdf');
