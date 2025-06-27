@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- DATA (from gas.html) ---
     const questions = [
         {
-            controlModule: "流量數據來源",
+            controlModule: "來源可視性 Blind Spot Identification",
             code: "1-1",
             assessmentArea: "來源控管",
             questionContent: "是否有建立並持續維護所有流量來源清單（如實體 TAP、Inline Feed、Virtual TAP、Cloud Mirror）？",
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         {
-            controlModule: "流量數據來源",
+            controlModule: "來源可視性 Blind Spot Identification",
             code: "1-2",
             assessmentArea: "分流設計",
             questionContent: "流量分送規則是否有標準？是否有明確規定哪些工具（如 IDS/IPS、SIEM、NDR）該收哪些類型的流量？",
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         {
-            controlModule: "流量數據來源",
+            controlModule: "來源可視性 Blind Spot Identification",
             code: "1-3",
             assessmentArea: "變更管理",
             questionContent: "當流量分送規則要新增或調整時，是否需要經過申請？是否有指定的審核人與變更紀錄保存？",
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         {
-            controlModule: "流量數據來源",
+            controlModule: "來源可視性 Blind Spot Identification",
             code: "1-4",
             assessmentArea: "重複性查核",
             questionContent: "是否有機制能定期檢查：同一份流量是否被複製多次或送到多個工具造成重複分析？",
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         {
-            controlModule: "流量數據來源",
+            controlModule: "來源可視性 Blind Spot Identification",
             code: "1-5",
             assessmentArea: "架構轉型",
             questionContent: "是否在架構轉型（如網路分段、軟體定義網路、虛擬化、雲端佈建）時重新檢討流量分送配置？",
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         {
-            controlModule: "流量數據品質",
+            controlModule: "數據完整性 Intelligence Qualification",
             code: "2-1",
             assessmentArea: "雜訊排除",
             questionContent: "是否有設定哪些協定或欄位會被過濾或裁切（如 Packet Slicing / Header Strip / De-duplication）來減少不必要的資料進工具？",
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         {
-            controlModule: "流量數據品質",
+            controlModule: "數據完整性 Intelligence Qualification",
             code: "2-2",
             assessmentArea: "加密解析",
             questionContent: "是否有 SSL / TLS 解密機制？解密後的資料是否有送進 IDS/IPS、NDR、UEBA、SIEM 等分析工具？",
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         {
-            controlModule: "流量數據品質",
+            controlModule: "數據完整性 Intelligence Qualification",
             code: "2-3",
             assessmentArea: "應用層識別",
             questionContent: "是否能產出應用層 metadata（例如 DNS 或 App 類別）並成功被NDR、UEBA、SIEM 使用？",
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         {
-            controlModule: "流量數據品質",
+            controlModule: "數據完整性 Intelligence Qualification",
             code: "2-4",
             assessmentArea: "回溯重組",
             questionContent: "SIEM 或 NDR 發出告警後，是否可以從原始封包找回對應的內容進行佐證分析？",
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         {
-            controlModule: "流量數據品質",
+            controlModule: "數據完整性 Intelligence Qualification",
             code: "2-5",
             assessmentArea: "品質查核",
             questionContent: "是否有定期抽樣驗證封包重組、解密或 metadata 的成功率？是否會寫入報表或記錄？",
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         {
-            controlModule: "流量數據應用",
+            controlModule: "工具有效性 Tool Effectiveness",
             code: "3-1",
             assessmentArea: "分級設計",
             questionContent: "是否依各工具需求設計分級分送流量規則？例如 SIEM 只收 metadata，NDR 收完整封包？",
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         {
-            controlModule: "流量數據應用",
+            controlModule: "工具有效性 Tool Effectiveness",
             code: "3-2",
             assessmentArea: "負載監控",
             questionContent: "是否有即時監控各工具的流量負載（bps / pps）並能判斷是否超量或延遲？",
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         {
-            controlModule: "流量數據應用",
+            controlModule: "工具有效性 Tool Effectiveness",
             code: "3-3",
             assessmentArea: "丟失預警",
             questionContent: "當某工具未接收到流量（如介面斷線、模組掛點）時，是否能自動產生異常告警？",
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         {
-            controlModule: "流量數據應用",
+            controlModule: "工具有效性 Tool Effectiveness",
             code: "3-4",
             assessmentArea: "擴展設計",
             questionContent: "是否已有設計，能支援 K8s／SASE／Remote VPC 等新環境接入與鏡像擴充？",
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         {
-            controlModule: "流量數據應用",
+            controlModule: "工具有效性 Tool Effectiveness",
             code: "3-5",
             assessmentArea: "高彈性維運",
             questionContent: "當流量需調整輸出來源或資源時，是否具備 Inline Bypass、Load Balancing、策略切換等設計來支援？",
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const overallCapabilityThresholds = { player: 27, elite: 37 };
     const moduleRecommendations = {
-        "流量數據來源": {
+        "來源可視性 Blind Spot Identification": {
             "低風險": {
                 finding: "目前已建立完整的流量分送架構，來源鏡像與分流管理納入制度化流程，並具備明確紀錄與執行機制，整體控管穩定性良好。惟隨著環境規模成長與應用多樣化，若缺乏中央化盤點與調度能力，仍可能在擴充或變更過程中出現配置延遲與管理落差風險。",
                 recommendation: "建議持續透過 GigaVUE-FM 平台統一盤點流量來源與工具配置，作為擴充前評估與異動規劃的依據，以提升可視性控管的擴展彈性與維運效率，確保流量治理能隨業務與架構成長動態調整。"
@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 recommendation: "建議建立流量來源與分送規劃清單，明確列示來源分類與責任分工對應，並導入異動申請與查核流程，提升變更管理的可控性與可追溯性。可搭配 GigaVUE-FM 平台實現視覺化流量配置與分流稽核，有效降低重複分析與錯誤配置風險，提升整體可視性治理品質。"
             }
         },
-        "流量數據品質": {
+        "數據完整性 Intelligence Qualification": {
             "低風險": {
                 finding: "封包處理鏈完整，流量分送後雜訊率與解碼成功率穩定，顯示目前資料品質具備良好的一致性與穩定性。然而若缺乏定期檢視與應用端需求對齊機制，仍可能隨架構變更或工具更新產生隱性落差，進而影響事件判斷的精準度與資料利用效率。",
                 recommendation: "建議建立定期檢查機制，盤點實際分送流量與工具所需的 Metadata 資料型態與格式一致性，並依據解析品質與警訊準確度需求進行調整與最佳化。此舉有助於維持數據品質穩定性，強化多工具整合下的分析準確度與可視性治理能力。"
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 recommendation: "建議部署 Packet Slicing、Header Strip、De-duplication、SSL Decryption 與 Metadata 識別等前處理模組，並強化封包重組與解密結果的檢核機制，以提升流量分送的精準度與處理效率，確保分析工具在穩定負載下維持高效運作與準確告警能力。"
             }
         },
-        "流量數據應用": {
+        "工具有效性 Tool Effectiveness": {
             "低風險": {
                 finding: "目前已具備明確的分級送流策略，能依據應用類型與分析目的，將流量有效派送至對應工具，並搭配異常接收監控機制，確保封包處理的穩定性與準確性。然而現行設計主要針對既有場域環境，若未同步考量新興運算架構（如容器平台、SASE、Service Mesh、分散式節點等），恐於擴展過程中產生對接落差、分析盲點與部署延誤等風險。",
                 recommendation: "建議及早盤點未來環境擴充需求，涵蓋多雲與混合雲部署、Kubernetes 架構、遠端 VPC、以及跨站點封包接入等場景，並預先規劃具備彈性調度與高延展性的流量接入與路由策略。此舉可強化整體可視性架構，支援 Zero Trust、DevOps 與 Cloud-Native 環境下的持續成長與治理韌性。"
@@ -230,9 +230,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const answerScores = { "Yes": 3, "Conditional": 2, "No": 1 };
     const moduleRiskThresholds = {
-        "流量數據來源": { high: 8, medium: 12 },
-        "流量數據品質": { high: 8, medium: 12 },
-        "流量數據應用": { high: 8, medium: 12 }
+        "來源可視性 Blind Spot Identification": { high: 8, medium: 12 },
+        "數據完整性 Intelligence Qualification": { high: 8, medium: 12 },
+        "工具有效性 Tool Effectiveness": { high: 8, medium: 12 }
     };
 
     // --- STATE ---
@@ -521,9 +521,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // ensure the new divs are appended to the correct parent.
 
         // --- NEW: Calculate domain scores for the chart ---
-        const sourceScore = calculateModuleScore("流量數據來源");
-        const qualityScore = calculateModuleScore("流量數據品質");
-        const applicationScore = calculateModuleScore("流量數據應用");
+        const sourceScore = calculateModuleScore("來源可視性 Blind Spot Identification");
+        const qualityScore = calculateModuleScore("數據完整性 Intelligence Qualification");
+        const applicationScore = calculateModuleScore("工具有效性 Tool Effectiveness");
 
         // Assuming each module has 5 questions, max score per module is 15
         const maxModuleScore = 15;
@@ -538,7 +538,7 @@ document.addEventListener('DOMContentLoaded', () => {
         new Chart(ctx, {
             type: 'radar',
             data: {
-                labels: ['工具有效性', '來源可視性', '數據完整性'],  // 恢復您習慣的標籤順序
+                labels: ['工具有效性', '來源可視性', '數據完整性'],  // domain labels
                 datasets: [{
                     label: '能力雷達圖',
                     data: [applicationValue, sourceValue, qualityValue], // 恢復對應的數據順序
