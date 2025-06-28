@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const storedUserInfo = localStorage.getItem('assessmentUserInfo');
         if (!storedUserInfo) {
             alert('無法獲取使用者資訊，將返回首頁。');
-            window.location.href = 'gas1.html';
+            window.location.href = 'index.html';
             return;
         }
         userInfo = JSON.parse(storedUserInfo);
@@ -587,8 +587,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Here you would typically submit the data
-        // submitDataToBackend(); 
+        submitDataToBackend();
         console.log("Quiz finished. Data to submit:", { userInfo, userAnswers });
     }
     
@@ -668,6 +667,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function submitDataToBackend() {
+        const payload = {
+            userName: userInfo.name,
+            userContactPhone: userInfo.contactPhone,
+            userMobilePhone: userInfo.mobilePhone,
+            userCompany: userInfo.company,
+            userEmail: userInfo.email,
+            answers: userAnswers
+        };
+
+        fetch("https://script.google.com/macros/s/AKfycbzPhrOMQU8RnBg2IV077HrR44hB2TxydSZzLhaSyNDM6NIjkDMjp8jwMs5MJafwzL7c/exec", {
+            method: "POST",
+            body: JSON.stringify(payload),
+            headers: { "Content-Type": "application/json" }
+        })
+        .then(res => res.json())
+        .then(() => {
+            submitStatusEl.innerHTML = '<div class="submit-success">✅ 評估結果已成功提交！</div>';
+        })
+        .catch(err => {
+            submitStatusEl.innerHTML = '<div class="submit-error">❌ 提交失敗：' + err + '</div>';
+        });
+    }
     // --- EVENT LISTENERS ---
     nextButton.addEventListener('click', () => {
         const selectedValue = getSelectedAnswer();
