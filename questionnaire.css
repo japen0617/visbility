@@ -960,3 +960,33 @@ hr {
 #completion-area .report-footer h3 {
     color: #fff;
 }
+
+/* Layout for the overall summary block */
+#overall-summary-block {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+@media (min-width: 768px) {
+    #overall-summary-block {
+        grid-template-columns: 1fr 1fr;
+        align-items: stretch;
+    }
+}
+
+#overall-summary-block .summary-left {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+}
+
+#capabilities-chart-container {
+    width: 18rem;
+    flex-shrink: 0;
+}
+
+#capabilities-chart-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
