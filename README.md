@@ -13,5 +13,5 @@ The page works entirely in the browser so no build steps are required.  For best
 
 ## Google Apps Script Backend (optional)
 
-To save the results to Google Sheets you can deploy the provided `saveToSheet` Apps Script function as a web app and update the endpoint URL in `questionnaire.js`.
+To save the results to Google Sheets deploy the `Code.gs` script in this repository as a web app and update the endpoint URL in `questionnaire.js`. The script stores each field and every selected answer in its own column so the results are easier to analyse.
 

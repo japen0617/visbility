@@ -664,13 +664,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function submitDataToBackend() {
+        const answerTexts = {};
+        Object.keys(userAnswers).forEach(code => {
+            const q = questions.find(q => q.code === code);
+            if (q && q.options[userAnswers[code]]) {
+                answerTexts[code] = q.options[userAnswers[code]];
+            } else {
+                answerTexts[code] = userAnswers[code];
+            }
+        });
+
         const payload = {
             userName: userInfo.name,
             userContactPhone: userInfo.contactPhone,
             userMobilePhone: userInfo.mobilePhone,
             userCompany: userInfo.company,
             userEmail: userInfo.email,
-            answers: userAnswers
+            answers: answerTexts
         };
 
         fetch("https://script.google.com/macros/s/AKfycbxT8NYmSFt-NltBOt-uAj3sC7UqxV8eVaFL8PQQcCxt-EcmbrV9jpu8NlRz6Wdoynxg/exec", {
