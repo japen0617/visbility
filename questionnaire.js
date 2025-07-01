@@ -677,7 +677,7 @@ document.addEventListener('DOMContentLoaded', () => {
             answers: userAnswers
         };
 
-        fetch("https://script.google.com/macros/s/AKfycbzPhrOMQU8RnBg2IV077HrR44hB2TxydSZzLhaSyNDM6NIjkDMjp8jwMs5MJafwzL7c/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbxT8NYmSFt-NltBOt-uAj3sC7UqxV8eVaFL8PQQcCxt-EcmbrV9jpu8NlRz6Wdoynxg/exec", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: { "Content-Type": "application/json" }
