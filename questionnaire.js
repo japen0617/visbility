@@ -416,11 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function displayResultsAndRecommendations() {
-        userSummaryEl.innerHTML = `
-            <h2>評估完成！</h2>
-            <p>感謝 <strong>${userInfo.name || '使用者'}</strong> (公司: ${userInfo.company || '未提供'}) 的參與。</p>
-            <p>您的專屬報告已產生如下。</p>
-        `;
+        userSummaryEl.innerHTML = '';
 
         // --- NEW: Calculate and display score ---
         let grandTotalScore = 0;
@@ -677,12 +673,12 @@ document.addEventListener('DOMContentLoaded', () => {
             answers: userAnswers
         };
 
-        fetch("https://script.google.com/macros/s/AKfycbzPhrOMQU8RnBg2IV077HrR44hB2TxydSZzLhaSyNDM6NIjkDMjp8jwMs5MJafwzL7c/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbxT8NYmSFt-NltBOt-uAj3sC7UqxV8eVaFL8PQQcCxt-EcmbrV9jpu8NlRz6Wdoynxg/exec", {
             method: "POST",
+            mode: "no-cors",
             body: JSON.stringify(payload),
             headers: { "Content-Type": "application/json" }
         })
-        .then(res => res.json())
         .then(() => {
             submitStatusEl.innerHTML = '<div class="submit-success">✅ 評估結果已成功提交！</div>';
         })
