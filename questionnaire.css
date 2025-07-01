@@ -968,13 +968,6 @@ hr {
     gap: 20px;
 }
 
-@media (min-width: 768px) {
-    #overall-summary-block {
-        grid-template-columns: 1fr 1fr;
-        align-items: stretch;
-    }
-}
-
 #overall-summary-block .summary-left {
     display: flex;
     gap: 20px;
