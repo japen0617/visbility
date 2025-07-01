@@ -427,11 +427,11 @@ body {
     
     /* New style for score container */
     #capabilities-score-container {
-        text-align: center;
+        text-align: left;
         margin: 25px 0;
-        padding: 20px;
-        background-color: #e9ecef;
-        border-radius: 8px;
+        padding: 0;
+        background-color: transparent;
+        border-radius: 0;
     }
     
     #capabilities-score-container .score-line {
@@ -898,11 +898,11 @@ hr {
 
 /* New style for score container */
 #capabilities-score-container {
-    text-align: center;
+    text-align: left;
     margin: 25px 0;
-    padding: 20px;
-    background-color: #e9ecef;
-    border-radius: 8px;
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
 }
 
 #capabilities-score-container .score-line {
@@ -972,6 +972,12 @@ hr {
     display: flex;
     gap: 20px;
     align-items: stretch;
+}
+
+#overall-summary-block .summary-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 #capabilities-chart-container {

@@ -491,7 +491,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Display Key Findings
         const keyFindingsContainerEl = document.getElementById('key-findings-container');
         keyFindingsContainerEl.innerHTML = `
-            <p><strong>關鍵發現:</strong> ${overallContent?.finding || "暫無關鍵發現"}</p>`;
+            <p>${overallContent?.finding || "暫無關鍵發現"}</p>`;
 
         // Display Recommendations
         const recommendationsDiv = document.getElementById('recommendations-container');
