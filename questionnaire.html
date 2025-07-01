@@ -159,21 +159,25 @@
                 <div class="assessment-results-section">
                     <hr>
                     <div id="user-summary"></div>
-                    <div class="grid grid-cols-3 items-center my-8 w-full">
+                    <h3 class="centered-h3">
+                        <span style="font-size:12pt;font-weight:bold;color:#000;">關鍵發現</span><br>
+                        <span style="font-size:10pt;color:#000;">Key Findings & Recommendations</span>
+                    </h3>
+                    <div class="grid grid-cols-3 items-start my-8 w-full">
                         <div class="flex justify-start">
                             <img id="capability-level-image" src="" alt="Capability Level" class="w-32 h-auto">
                         </div>
-                        <div id="capabilities-score-container"></div>
+                        <div>
+                            <div id="capabilities-score-container"></div>
+                            <div id="key-findings-container"></div>
+                            <div id="recommendations-container"></div>
+                        </div>
                         <div class="flex justify-end">
                             <div id="capabilities-chart-container" class="w-72 h-72">
                                 <canvas id="capabilities-chart"></canvas>
                             </div>
                         </div>
                     </div>
-                    <hr>
-                    <h3 class="centered-h3">關鍵發現與建議 Key Findings & Recommendations</h3>
-                    <div id="key-findings-container"></div>
-                    <div id="recommendations-container"></div>
                     <hr>
                     <h3 class="centered-h3">三大構面 發現與建議<br><span class="h3-subtitle">Domain-Based Findings & Recommendations</span></h3>
                     <div id="module-recommendations-container"></div>

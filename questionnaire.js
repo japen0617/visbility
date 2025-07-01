@@ -425,10 +425,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         const maxScore = questions.length * 3;
         const scoreContainerEl = document.getElementById('capabilities-score-container');
-        if (scoreContainerEl) { // Check if element exists
+        if (scoreContainerEl) {
             scoreContainerEl.innerHTML = `
-                <div class="score-title">Capabilities Score</div>
-                <div class="score-value">${grandTotalScore} / ${maxScore}</div>
+                <div class="score-line">Capabilities Score: <span class="score-value">${grandTotalScore}</span> / ${maxScore}</div>
             `;
         }
 
@@ -492,12 +491,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Display Key Findings
         const keyFindingsContainerEl = document.getElementById('key-findings-container');
         keyFindingsContainerEl.innerHTML = `
-            <h4>關鍵發現:</h4>
-            <p>${overallContent?.finding || "暫無關鍵發現"}</p>`;
+            <p><strong>關鍵發現:</strong> ${overallContent?.finding || "暫無關鍵發現"}</p>`;
 
         // Display Recommendations
         const recommendationsDiv = document.getElementById('recommendations-container');
-        recommendationsDiv.innerHTML = `<p>${overallContent?.recommendation || "暫無建議"}</p>`;
+        recommendationsDiv.innerHTML = `<p><strong>建議事項：</strong>${overallContent?.recommendation || "暫無建議"}</p>`;
 
         // The old overallEvaluationContainerEl is no longer used directly for content,
         
@@ -534,10 +532,10 @@ document.addEventListener('DOMContentLoaded', () => {
         new Chart(ctx, {
             type: 'radar',
             data: {
-                labels: ['工具有效性', '來源可視性', '數據完整性'],  // domain labels
+                labels: ['來源可視性', '數據完整性', '工具有效性'],
                 datasets: [{
                     label: '能力雷達圖',
-                    data: [applicationValue, sourceValue, qualityValue], // 恢復對應的數據順序
+                    data: [sourceValue, qualityValue, applicationValue],
                     fill: true,
                     backgroundColor: 'rgba(255, 128, 0, 0.2)',  // Orange with some transparency
                     borderColor: '#ff8000',  // Solid orange border
