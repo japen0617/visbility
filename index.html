@@ -14,7 +14,7 @@
             overflow-x: hidden; /* 防止水平滾動 */
         }
         body {
-            font-family: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Century Gothic', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
             min-height: 100vh;
             background: transparent url('blackground1.png') no-repeat center center;
             background-size: cover;
@@ -116,6 +116,7 @@
             width: 100%;
             box-sizing: border-box;
             color: #333;
+            border-radius: 15px; /* 四周圓弧 */
         }
         .form-container h2 {
             font-size: 1.6em;
@@ -126,18 +127,18 @@
             text-align: center;
         }
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px; /* 縮小行距 */
         }
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: #555;
             font-size: 0.95em;
             font-weight: 600;
         }
         .form-group input {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border: 1px solid #ccc;
             border-radius: 6px;
             background: #fff;
@@ -156,27 +157,32 @@
             margin-left: 4px;
         }
         .form-check {
-            margin: 25px 0;
+            margin: 20px 0;
             font-size: 0.9em;
             color: #555;
             display: flex;
-            align-items: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
         }
         .form-check input[type="checkbox"] {
             margin-right: 10px;
             margin-top: 3px;
             flex-shrink: 0;
         }
+        .privacy-text {
+            flex: 1;
+        }
         .form-btn {
-            width: 100%;
+            width: auto;
             background: #ff8000;
             color: #fff;
             border: none;
             border-radius: 6px;
             font-size: 1.1em;
             font-weight: bold;
-            padding: 14px 0;
-            margin-top: 10px;
+            padding: 10px 20px;
+            margin-top: 0;
+            margin-left: auto;
             cursor: pointer;
             transition: background 0.3s;
         }
@@ -277,9 +283,9 @@
                     </div>
                     <div class="form-check">
                         <input type="checkbox" id="privacy-check" required>
-                        我同意逸盈科技依據隱私權政策蒐集、處理並使用本人提供的個人資料，用於此次免費服務與後續 Gigamon 相關產品與活動資訊通知。
+                        <span class="privacy-text">我同意逸盈科技依據隱私權政策蒐集、處理並使用本人提供的個人資料，用於此次免費服務與後續 Gigamon 相關產品與活動資訊通知。</span>
+                        <button type="submit" class="form-btn">開始評估</button>
                     </div>
-                    <button type="submit" class="form-btn">開始評估</button>
                 </form>
             </div>
         </div>

@@ -416,11 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function displayResultsAndRecommendations() {
-        userSummaryEl.innerHTML = `
-            <h2>評估完成！</h2>
-            <p>感謝 <strong>${userInfo.name || '使用者'}</strong> (公司: ${userInfo.company || '未提供'}) 的參與。</p>
-            <p>您的專屬報告已產生如下。</p>
-        `;
+        userSummaryEl.innerHTML = '';
 
         // --- NEW: Calculate and display score ---
         let grandTotalScore = 0;
@@ -429,15 +425,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         const maxScore = questions.length * 3;
         const scoreContainerEl = document.getElementById('capabilities-score-container');
-        if (scoreContainerEl) { // Check if element exists
+        if (scoreContainerEl) {
             scoreContainerEl.innerHTML = `
-                <div class="score-title">Capabilities Score</div>
-                <div class="score-value">${grandTotalScore} / ${maxScore}</div>
+                <div class="score-line">Capabilities Score: <span class="score-value">${grandTotalScore}</span> / ${maxScore}</div>
             `;
         }
 
         moduleRecommendationsContainerEl.innerHTML = ''; 
         const riskLevelMap = { "低風險": "Low", "中風險": "Medium", "高風險": "High" };
+
+        const displayNameMap = {
+            "來源可視性 Blind Spot Identification": "Blind Spot Identification 「來源可視性」",
+            "數據完整性 Intelligence Qualification": "Intelligence Qualification 「數據完整性」",
+            "工具有效性 Tool Effectiveness": "Tool Effectiveness 「工具有效性」"
+        };
+        const iconMap = {
+            "來源可視性 Blind Spot Identification": "blind.png",
+            "數據完整性 Intelligence Qualification": "intelligence.png",
+            "工具有效性 Tool Effectiveness": "tool.png"
+        };
 
         Object.keys(moduleRecommendations).forEach(moduleName => {
             const riskLevel = calculateModuleRisk(moduleName);
@@ -464,8 +470,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             qaHtml += '</div>';
 
+            const displayName = displayNameMap[moduleName] || moduleName;
+            const icon = iconMap[moduleName] || '';
+
             moduleBlock.innerHTML = `
-                <h4 class="module-title">${moduleName}</h4>
+                <div class="flex items-center gap-2 mb-1">
+                    <img src="${icon}" alt="" class="module-icon">
+                    <h4 class="module-title">${displayName}</h4>
+                </div>
                 <div class="risk-level">Risk Level: ${riskLevelMap[riskLevel] || riskLevel}</div>
                 
                 <div class="findings-block">
@@ -496,12 +508,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Display Key Findings
         const keyFindingsContainerEl = document.getElementById('key-findings-container');
         keyFindingsContainerEl.innerHTML = `
-            <h4>關鍵發現:</h4>
             <p>${overallContent?.finding || "暫無關鍵發現"}</p>`;
 
         // Display Recommendations
         const recommendationsDiv = document.getElementById('recommendations-container');
-        recommendationsDiv.innerHTML = `<p>${overallContent?.recommendation || "暫無建議"}</p>`;
+        recommendationsDiv.innerHTML = `<p><strong>建議事項：</strong>${overallContent?.recommendation || "暫無建議"}</p>`;
 
         // The old overallEvaluationContainerEl is no longer used directly for content,
         
@@ -538,10 +549,10 @@ document.addEventListener('DOMContentLoaded', () => {
         new Chart(ctx, {
             type: 'radar',
             data: {
-                labels: ['工具有效性', '來源可視性', '數據完整性'],  // domain labels
+                labels: ['來源可視性', '數據完整性', '工具有效性'],
                 datasets: [{
                     label: '能力雷達圖',
-                    data: [applicationValue, sourceValue, qualityValue], // 恢復對應的數據順序
+                    data: [sourceValue, qualityValue, applicationValue],
                     fill: true,
                     backgroundColor: 'rgba(255, 128, 0, 0.2)',  // Orange with some transparency
                     borderColor: '#ff8000',  // Solid orange border
@@ -668,21 +679,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function submitDataToBackend() {
+        const answerTexts = {};
+        Object.keys(userAnswers).forEach(code => {
+            const q = questions.find(q => q.code === code);
+            if (q && q.options[userAnswers[code]]) {
+                answerTexts[code] = q.options[userAnswers[code]];
+            } else {
+                answerTexts[code] = userAnswers[code];
+            }
+        });
+
         const payload = {
             userName: userInfo.name,
             userContactPhone: userInfo.contactPhone,
             userMobilePhone: userInfo.mobilePhone,
             userCompany: userInfo.company,
             userEmail: userInfo.email,
-            answers: userAnswers
+            answers: answerTexts
         };
 
-        fetch("https://script.google.com/macros/s/AKfycbzPhrOMQU8RnBg2IV077HrR44hB2TxydSZzLhaSyNDM6NIjkDMjp8jwMs5MJafwzL7c/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbxT8NYmSFt-NltBOt-uAj3sC7UqxV8eVaFL8PQQcCxt-EcmbrV9jpu8NlRz6Wdoynxg/exec", {
             method: "POST",
+            mode: "no-cors",
             body: JSON.stringify(payload),
             headers: { "Content-Type": "application/json" }
         })
-        .then(res => res.json())
         .then(() => {
             submitStatusEl.innerHTML = '<div class="submit-success">✅ 評估結果已成功提交！</div>';
         })
