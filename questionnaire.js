@@ -596,7 +596,8 @@ const submitStatusEl = document.getElementById('submit-status');
     }
     
     /**
-     * Exports the report section as a multi-page PDF file.
+     * 將報告區塊匯出為單一長頁面的 PDF 檔案。
+     * 移除 A4 分頁邏輯以避免內容被裁切。
      */
     function exportReportAsPDF() {
         const { jsPDF } = window.jspdf;
@@ -604,67 +605,42 @@ const submitStatusEl = document.getElementById('submit-status');
         const downloadButton = document.getElementById('download-pdf-btn');
         const originalButtonText = downloadButton.textContent;
 
-        // --- Prepare for capture ---
+        // --- 準備擷取畫面 ---
         downloadButton.textContent = '報告產生中...';
         downloadButton.disabled = true;
-        // Hide the button so it doesn't appear in the PDF
         downloadButton.style.visibility = 'hidden';
 
         html2canvas(reportElement, {
-            scale: 1, // lower scale to reduce file size
+            scale: 1.5, // 提高清晰度
             useCORS: true,
             logging: false,
             windowWidth: reportElement.scrollWidth,
             windowHeight: reportElement.scrollHeight
         }).then(canvas => {
+            const canvasWidth = canvas.width;
+            const canvasHeight = canvas.height;
+
+            const pdfWidth = 210; // A4 寬度約 210mm
+            const pdfHeight = (canvasHeight * pdfWidth) / canvasWidth;
+
             const pdf = new jsPDF({
                 orientation: 'p',
                 unit: 'mm',
-                format: 'a4'
+                format: [pdfWidth, pdfHeight]
             });
 
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = pdf.internal.pageSize.getHeight();
-
-            const pageHeightPx = canvas.width * (pdfHeight / pdfWidth);
-            let renderedHeight = 0;
-            const pageCanvas = document.createElement('canvas');
-            const pageCtx = pageCanvas.getContext('2d');
-
-            while (renderedHeight < canvas.height) {
-                const remaining = canvas.height - renderedHeight;
-                pageCanvas.width = canvas.width;
-                pageCanvas.height = Math.min(pageHeightPx, remaining);
-                pageCtx.clearRect(0, 0, pageCanvas.width, pageCanvas.height);
-                pageCtx.drawImage(
-                    canvas,
-                    0,
-                    renderedHeight,
-                    canvas.width,
-                    pageCanvas.height,
-                    0,
-                    0,
-                    canvas.width,
-                    pageCanvas.height
-                );
-
-                const imgData = pageCanvas.toDataURL('image/jpeg', 0.8);
-                if (renderedHeight > 0) pdf.addPage();
-                pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-
-                renderedHeight += pageHeightPx;
-            }
+            const imgData = canvas.toDataURL('image/jpeg', 0.85);
+            pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
 
             pdf.save('可視化控管評估報告.pdf');
 
-            // --- Restore UI after capture ---
+            // --- 完成後恢復 UI ---
             downloadButton.textContent = originalButtonText;
             downloadButton.disabled = false;
             downloadButton.style.visibility = 'visible';
         }).catch(error => {
             console.error("PDF 產生錯誤:", error);
             alert("抱歉，產生 PDF 時發生錯誤。");
-            // Restore UI in case of an error
             downloadButton.textContent = originalButtonText;
             downloadButton.disabled = false;
             downloadButton.style.visibility = 'visible';
