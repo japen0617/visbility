@@ -289,10 +289,19 @@ body {
     .module-result-block .risk-level {
         font-size: 1em;
         font-weight: bold;
-        color: #ff8000;
+        color: #000;
         margin-bottom: 20px;
         padding-bottom: 10px;
         border-bottom: 1px solid #eee;
+    }
+    .module-result-block .risk-level .risk-value.low {
+        color: #28a745;
+    }
+    .module-result-block .risk-level .risk-value.medium {
+        color: #ff8000;
+    }
+    .module-result-block .risk-level .risk-value.high {
+        color: #dc3545;
     }
     .findings-block, .recommendations-block, .qa-block {
         margin-bottom: 20px;
@@ -756,14 +765,6 @@ body {
     color: #ff8000;
     margin-top: 0;
     margin-bottom: 5px;
-}
-.module-result-block .risk-level {
-    font-size: 1em;
-    font-weight: bold;
-    color: #ff8000;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
 }
 .findings-block, .recommendations-block, .qa-block {
     margin-bottom: 20px;

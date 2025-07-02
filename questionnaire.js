@@ -471,7 +471,7 @@ const submitStatusEl = document.getElementById('submit-status');
                     <img src="${moduleIcons[moduleName] || ''}" alt="${moduleName} Icon" class="w-8 h-8">
                     <h4 class="module-title">${moduleName}</h4>
                 </div>
-                <div class="risk-level">Risk Level: ${riskLevelMap[riskLevel] || riskLevel}</div>
+                <div class="risk-level">Risk Level: <span class="risk-value ${ (riskLevelMap[riskLevel] || riskLevel).toLowerCase() }">${riskLevelMap[riskLevel] || riskLevel}</span></div>
                 
                 <div class="findings-block">
                     <p>${recommendationContent.finding}</p>
