@@ -306,6 +306,12 @@ body {
     .findings-block, .recommendations-block, .qa-block {
         margin-bottom: 20px;
     }
+    .findings-block, .recommendations-block {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        border: 1px solid #e9ecef;
+    }
     .findings-block h5, .recommendations-block h5, .qa-block h5 {
         font-size: 1.2em;
         color: #343a40;
@@ -323,10 +329,10 @@ body {
         margin-top: 10px;
     }
     .qa-item {
-        background-color: #f8f9fa;
-        padding: 15px;
-        border-radius: 5px;
-        border: 1px solid #e9ecef;
+        background-color: transparent;
+        padding: 0;
+        border-radius: 0;
+        border: none;
     }
     .qa-item .qa-header {
         font-weight: bold;
@@ -769,6 +775,12 @@ body {
 .findings-block, .recommendations-block, .qa-block {
     margin-bottom: 20px;
 }
+.findings-block, .recommendations-block {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #e9ecef;
+}
 .findings-block h5, .recommendations-block h5, .qa-block h5 {
     font-size: 1.2em;
     color: #343a40;
@@ -786,10 +798,10 @@ body {
     margin-top: 10px;
 }
 .qa-item {
-    background-color: #f8f9fa;
-    padding: 15px;
-    border-radius: 5px;
-    border: 1px solid #e9ecef;
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+    border: none;
 }
 .qa-item .qa-header {
     font-weight: bold;

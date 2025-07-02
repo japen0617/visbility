@@ -483,7 +483,7 @@ const submitStatusEl = document.getElementById('submit-status');
                 </div>
 
                 <div class="qa-block">
-                    <h5>問答詳情 (Q&A Details)</h5>
+                    <h5>問答詳情</h5>
                     ${qaHtml}
                 </div>
             `;
