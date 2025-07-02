@@ -250,10 +250,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const quizAreaEl = document.getElementById('quiz-area');
     const completionAreaEl = document.getElementById('completion-area');
     const userSummaryEl = document.getElementById('user-summary');
-    const moduleRecommendationsContainerEl = document.getElementById('module-recommendations-container');
-    const overallEvaluationContainerEl = document.getElementById('overall-evaluation-container');
-    const loadingEl = document.getElementById('loading');
-    const submitStatusEl = document.getElementById('submit-status');
+const moduleRecommendationsContainerEl = document.getElementById('module-recommendations-container');
+const overallEvaluationContainerEl = document.getElementById('overall-evaluation-container');
+const loadingEl = document.getElementById('loading');
+const submitStatusEl = document.getElementById('submit-status');
+
+    // Icons for module titles
+    const moduleIcons = {
+        "來源可視性 Blind Spot Identification": "blind.png",
+        "數據完整性 Intelligence Qualification": "intelligence.png",
+        "工具有效性 Tool Effectiveness": "tool.png"
+    };
 
     // --- FUNCTIONS ---
     function initQuiz() {
@@ -460,7 +467,10 @@ document.addEventListener('DOMContentLoaded', () => {
             qaHtml += '</div>';
 
             moduleBlock.innerHTML = `
-                <h4 class="module-title">${moduleName}</h4>
+                <div class="flex items-center gap-2 module-header">
+                    <img src="${moduleIcons[moduleName] || ''}" alt="${moduleName} Icon" class="w-8 h-8">
+                    <h4 class="module-title">${moduleName}</h4>
+                </div>
                 <div class="risk-level">Risk Level: ${riskLevelMap[riskLevel] || riskLevel}</div>
                 
                 <div class="findings-block">

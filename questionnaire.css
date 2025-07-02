@@ -334,7 +334,7 @@ body {
         margin-bottom: 5px;
     }
     .qa-item .qa-a {
-        color: #28a745;
+        color: #000;
         font-weight: 500;
     }
     .overall-evaluation-item {
@@ -805,7 +805,7 @@ body {
     margin-bottom: 5px;
 }
 .qa-item .qa-a {
-    color: #28a745;
+    color: #000;
     font-weight: 500;
 }
 .overall-evaluation-item {
