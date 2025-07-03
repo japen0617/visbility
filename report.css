@@ -251,7 +251,7 @@
     /* Styles for Key Findings and Recommendations sections */
     #key-findings-container,
     #recommendations-container {
-        background-color: #f8f9fa;
+    background-color: #e9ecef; /* Changed to a more visible gray */
         padding: 20px;
         margin-top: 15px;
         border-radius: 5px;
