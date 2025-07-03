@@ -250,10 +250,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const quizAreaEl = document.getElementById('quiz-area');
     const completionAreaEl = document.getElementById('completion-area');
     const userSummaryEl = document.getElementById('user-summary');
-    const moduleRecommendationsContainerEl = document.getElementById('module-recommendations-container');
-    const overallEvaluationContainerEl = document.getElementById('overall-evaluation-container');
-    const loadingEl = document.getElementById('loading');
-    const submitStatusEl = document.getElementById('submit-status');
+const moduleRecommendationsContainerEl = document.getElementById('module-recommendations-container');
+const overallEvaluationContainerEl = document.getElementById('overall-evaluation-container');
+const loadingEl = document.getElementById('loading');
+const submitStatusEl = document.getElementById('submit-status');
+
+    // Icons for module titles
+    const moduleIcons = {
+        "來源可視性 Blind Spot Identification": "blind.png",
+        "數據完整性 Intelligence Qualification": "intelligence.png",
+        "工具有效性 Tool Effectiveness": "tool.png"
+    };
 
     // --- FUNCTIONS ---
     function initQuiz() {
@@ -460,8 +467,11 @@ document.addEventListener('DOMContentLoaded', () => {
             qaHtml += '</div>';
 
             moduleBlock.innerHTML = `
-                <h4 class="module-title">${moduleName}</h4>
-                <div class="risk-level">Risk Level: ${riskLevelMap[riskLevel] || riskLevel}</div>
+                <div class="flex items-center gap-2 module-header">
+                    <img src="${moduleIcons[moduleName] || ''}" alt="${moduleName} Icon" class="w-8 h-8">
+                    <h4 class="module-title">${moduleName}</h4>
+                </div>
+                <div class="risk-level">Risk Level: <span class="risk-value ${ (riskLevelMap[riskLevel] || riskLevel).toLowerCase() }">${riskLevelMap[riskLevel] || riskLevel}</span></div>
                 
                 <div class="findings-block">
                     <p>${recommendationContent.finding}</p>
@@ -473,7 +483,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
 
                 <div class="qa-block">
-                    <h5>問答詳情 (Q&A Details)</h5>
+                    <h5>問答詳情</h5>
                     ${qaHtml}
                 </div>
             `;
@@ -586,7 +596,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     /**
-     * Exports the report section as a multi-page PDF file.
+     * 將報告區塊匯出為單一長頁面的 PDF 檔案並下載。
+     * 保留原先的下載按鈕邏輯供使用者另行下載。
      */
     function exportReportAsPDF() {
         const { jsPDF } = window.jspdf;
@@ -594,70 +605,89 @@ document.addEventListener('DOMContentLoaded', () => {
         const downloadButton = document.getElementById('download-pdf-btn');
         const originalButtonText = downloadButton.textContent;
 
-        // --- Prepare for capture ---
+        // --- 準備擷取畫面 ---
         downloadButton.textContent = '報告產生中...';
         downloadButton.disabled = true;
-        // Hide the button so it doesn't appear in the PDF
         downloadButton.style.visibility = 'hidden';
 
         html2canvas(reportElement, {
-            scale: 1, // lower scale to reduce file size
+            scale: 1.5, // 提高清晰度
             useCORS: true,
             logging: false,
             windowWidth: reportElement.scrollWidth,
             windowHeight: reportElement.scrollHeight
         }).then(canvas => {
+            const canvasWidth = canvas.width;
+            const canvasHeight = canvas.height;
+
+            const pdfWidth = 210; // A4 寬度約 210mm
+            const pdfHeight = (canvasHeight * pdfWidth) / canvasWidth;
+
             const pdf = new jsPDF({
                 orientation: 'p',
                 unit: 'mm',
-                format: 'a4'
+                format: [pdfWidth, pdfHeight]
             });
 
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = pdf.internal.pageSize.getHeight();
-
-            const pageHeightPx = canvas.width * (pdfHeight / pdfWidth);
-            let renderedHeight = 0;
-            const pageCanvas = document.createElement('canvas');
-            const pageCtx = pageCanvas.getContext('2d');
-
-            while (renderedHeight < canvas.height) {
-                const remaining = canvas.height - renderedHeight;
-                pageCanvas.width = canvas.width;
-                pageCanvas.height = Math.min(pageHeightPx, remaining);
-                pageCtx.clearRect(0, 0, pageCanvas.width, pageCanvas.height);
-                pageCtx.drawImage(
-                    canvas,
-                    0,
-                    renderedHeight,
-                    canvas.width,
-                    pageCanvas.height,
-                    0,
-                    0,
-                    canvas.width,
-                    pageCanvas.height
-                );
-
-                const imgData = pageCanvas.toDataURL('image/jpeg', 0.8);
-                if (renderedHeight > 0) pdf.addPage();
-                pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-
-                renderedHeight += pageHeightPx;
-            }
+            const imgData = canvas.toDataURL('image/jpeg', 0.85);
+            pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
 
             pdf.save('可視化控管評估報告.pdf');
 
-            // --- Restore UI after capture ---
+            // --- 完成後恢復 UI ---
             downloadButton.textContent = originalButtonText;
             downloadButton.disabled = false;
             downloadButton.style.visibility = 'visible';
         }).catch(error => {
             console.error("PDF 產生錯誤:", error);
             alert("抱歉，產生 PDF 時發生錯誤。");
-            // Restore UI in case of an error
             downloadButton.textContent = originalButtonText;
             downloadButton.disabled = false;
             downloadButton.style.visibility = 'visible';
+        });
+    }
+
+    /**
+     * 產生報告 PDF 並以 Base64 字串回傳，不觸發下載。
+     */
+    function generateReportPdfBase64() {
+        const { jsPDF } = window.jspdf;
+        const reportElement = document.getElementById('completion-area');
+        return html2canvas(reportElement, {
+            scale: 1.5,
+            useCORS: true,
+            logging: false,
+            windowWidth: reportElement.scrollWidth,
+            windowHeight: reportElement.scrollHeight
+        }).then(canvas => {
+            const pdfWidth = 210;
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+            const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: [pdfWidth, pdfHeight] });
+            const imgData = canvas.toDataURL('image/jpeg', 0.85);
+            pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+            const dataUri = pdf.output('datauristring');
+            return dataUri.split(',')[1]; // 返回 Base64 字串
+        });
+    }
+
+    /**
+     * 將產生的 PDF Base64 字串與使用者資訊上傳至後端。
+     */
+    function uploadPdfBase64(base64) {
+        const payload = {
+            type: 'pdf',
+            userName: userInfo.name,
+            userCompany: userInfo.company,
+            userEmail: userInfo.email,
+            pdfBase64: base64
+        };
+        fetch("https://script.google.com/macros/s/AKfycbxT8NYmSFt-NltBOt-uAj3sC7UqxV8eVaFL8PQQcCxt-EcmbrV9jpu8NlRz6Wdoynxg/exec", {
+            method: "POST",
+            mode: "no-cors",
+            body: JSON.stringify(payload),
+            headers: { "Content-Type": "application/json" }
+        }).catch(err => {
+            console.error('PDF 上傳失敗:', err);
         });
     }
 
@@ -673,6 +703,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const payload = {
+            type: 'answers',
             userName: userInfo.name,
             userContactPhone: userInfo.contactPhone,
             userMobilePhone: userInfo.mobilePhone,
@@ -693,6 +724,9 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(err => {
             submitStatusEl.innerHTML = '<div class="submit-error">❌ 提交失敗：' + err + '</div>';
         });
+
+        // 上傳 PDF
+        generateReportPdfBase64().then(uploadPdfBase64);
     }
     // --- EVENT LISTENERS ---
     nextButton.addEventListener('click', () => {

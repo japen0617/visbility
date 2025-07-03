@@ -12,7 +12,14 @@ function doPost(e) {
   if (e.postData && e.postData.contents) {
     data = JSON.parse(e.postData.contents);
   }
-  var result = saveToSheet(data);
+
+  var result;
+  if (data.type === 'pdf') {
+    result = savePdfToDrive(data);
+  } else {
+    result = saveToSheet(data);
+  }
+
   var output = ContentService.createTextOutput(JSON.stringify(result))
     .setMimeType(ContentService.MimeType.JSON);
   output.setHeader('Access-Control-Allow-Origin', '*');
@@ -55,4 +62,18 @@ function saveToSheet(data) {
 
   sheet.appendRow(row);
   return {status: 'success'};
+}
+
+function savePdfToDrive(data) {
+  try {
+    var folder = DriveApp.getFolderById('1uKpHSmWycbZ0LdNCsVR80tswREEMuMwG');
+    var bytes = Utilities.base64Decode(data.pdfBase64 || '');
+    var timestamp = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyyMMdd_HHmmss');
+    var filename = (data.userCompany || 'company') + '_' + (data.userName || 'user') + '_報告_' + timestamp + '.pdf';
+    var blob = Utilities.newBlob(bytes, 'application/pdf', filename);
+    folder.createFile(blob);
+    return {status: 'success'};
+  } catch (err) {
+    return {status: 'error', message: err.toString()};
+  }
 }
