@@ -5,36 +5,28 @@ html {
 html, body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden;/* General Body and Page Styles */
-    html {
-        background-color: #181818;
-    }
-    html, body {
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden;
-    }
-    body {
-        font-family: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', Tahoma, Geneva, Verdana, sans-serif;
-        min-height: 100vh;
-        background: transparent url('blackground1.png') no-repeat center center;
-        background-size: cover;
-        background-attachment: fixed;
-        color: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        padding-top: 40px;
-    }
-    
-    .page-wrapper {
-        width: 100%;
-        max-width: 1320px; /* Increased from 900px to allow report content to expand */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-    }
+    overflow-x: hidden;
+}
+body {
+    font-family: 'Century Gothic', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
+    min-height: 100vh;
+    background: transparent url('questionbq.png') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 40px;
+}
+.page-wrapper {
+    width: 100%;
+    max-width: 1320px; /* Increased from 900px to allow report content to expand */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
     
     .quiz-header {
         width: 100%;
@@ -222,8 +214,7 @@ html, body {
     
     /* Completion/Results Area Styles (copied and adapted from gas.html styles) */
     #completion-area {
-        /* Use Noto Sans for the entire report section */
-        font-family: 'Noto Sans TC', sans-serif;
+        font-family: 'Century Gothic', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
         padding: 0;
         overflow: hidden; /* Ensures border-radius works with negative margins */
         padding-bottom: 20px;
@@ -246,7 +237,7 @@ html, body {
     }
     #completion-area h3 {
         margin-top: 25px;
-        color: #0056b3;
+        color: #000;
         border-bottom: 2px solid #dee2e6;
         padding-bottom: 8px;
         font-size: 1.4em;
@@ -274,7 +265,7 @@ html, body {
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
     .recommendations-list li strong {
-        color: #0056b3;
+        color: #ff8000;
         display: block;
         margin-bottom: 7px;
         font-size: 1.05em;
@@ -291,20 +282,35 @@ html, body {
     .module-result-block .module-title {
         font-size: 1.5em;
         font-weight: 700;
-        color: #0056b3;
+        color: #ff8000;
         margin-top: 0;
         margin-bottom: 5px;
     }
     .module-result-block .risk-level {
         font-size: 1em;
         font-weight: bold;
-        color: #ff8000;
+        color: #000;
         margin-bottom: 20px;
         padding-bottom: 10px;
         border-bottom: 1px solid #eee;
     }
+    .module-result-block .risk-level .risk-value.low {
+        color: #28a745;
+    }
+    .module-result-block .risk-level .risk-value.medium {
+        color: #ff8000;
+    }
+    .module-result-block .risk-level .risk-value.high {
+        color: #dc3545;
+    }
     .findings-block, .recommendations-block, .qa-block {
         margin-bottom: 20px;
+    }
+    .findings-block, .recommendations-block {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        border: 1px solid #e9ecef;
     }
     .findings-block h5, .recommendations-block h5, .qa-block h5 {
         font-size: 1.2em;
@@ -323,10 +329,10 @@ html, body {
         margin-top: 10px;
     }
     .qa-item {
-        background-color: #f8f9fa;
-        padding: 15px;
-        border-radius: 5px;
-        border: 1px solid #e9ecef;
+        background-color: transparent;
+        padding: 0;
+        border-radius: 0;
+        border: none;
     }
     .qa-item .qa-header {
         font-weight: bold;
@@ -343,7 +349,7 @@ html, body {
         margin-bottom: 5px;
     }
     .qa-item .qa-a {
-        color: #28a745;
+        color: #000;
         font-weight: 500;
     }
     .overall-evaluation-item {
@@ -431,29 +437,26 @@ html, body {
     /* Wrapper for the original assessment results to add padding */
     .assessment-results-section {
         padding: 30px 40px; /* Re-apply original container padding */
-        /* Re-apply original font for readability of results */
-        font-family: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Century Gothic', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
     }
     
     /* New style for score container */
     #capabilities-score-container {
-        text-align: center;
+        text-align: left;
         margin: 25px 0;
-        padding: 20px;
-        background-color: #e9ecef;
-        border-radius: 8px;
+        padding: 0;
+        background-color: transparent;
+        border-radius: 0;
     }
     
-    #capabilities-score-container .score-title {
+    #capabilities-score-container .score-line {
         font-size: 1.2em;
-        font-weight: 600;
-        color: #495057;
-        margin: 0 0 10px 0;
-    }
-    
-    #capabilities-score-container .score-value {
-        font-size: 2.5em;
         font-weight: bold;
+        color: #000;
+        margin-bottom: 10px;
+    }
+
+    #capabilities-score-container .score-value {
         color: #ff8000;
     }
     
@@ -503,9 +506,9 @@ html, body {
     }
 }
 body {
-    font-family: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Century Gothic', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
     min-height: 100vh;
-    background: transparent url('blackground1.png') no-repeat center center;
+    background: transparent url('questionbq.png') no-repeat center center;
     background-size: cover;
     background-attachment: fixed;
     color: #fff;
@@ -697,8 +700,7 @@ body {
 
 /* Completion/Results Area Styles (copied and adapted from gas.html styles) */
 #completion-area {
-    /* Use Noto Sans for the entire report section */
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: 'Century Gothic', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
     padding: 0;
     overflow: hidden; /* Ensures border-radius works with negative margins */
     padding-bottom: 20px;
@@ -721,7 +723,7 @@ body {
 }
 #completion-area h3 {
     margin-top: 25px;
-    color: #0056b3;
+    color: #000;
     border-bottom: 2px solid #dee2e6;
     padding-bottom: 8px;
     font-size: 1.4em;
@@ -749,7 +751,7 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 .recommendations-list li strong {
-    color: #0056b3;
+    color: #ff8000;
     display: block;
     margin-bottom: 7px;
     font-size: 1.05em;
@@ -766,20 +768,18 @@ body {
 .module-result-block .module-title {
     font-size: 1.5em;
     font-weight: 700;
-    color: #0056b3;
+    color: #ff8000;
     margin-top: 0;
     margin-bottom: 5px;
 }
-.module-result-block .risk-level {
-    font-size: 1em;
-    font-weight: bold;
-    color: #ff8000;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
-}
 .findings-block, .recommendations-block, .qa-block {
     margin-bottom: 20px;
+}
+.findings-block, .recommendations-block {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #e9ecef;
 }
 .findings-block h5, .recommendations-block h5, .qa-block h5 {
     font-size: 1.2em;
@@ -798,10 +798,10 @@ body {
     margin-top: 10px;
 }
 .qa-item {
-    background-color: #f8f9fa;
-    padding: 15px;
-    border-radius: 5px;
-    border: 1px solid #e9ecef;
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+    border: none;
 }
 .qa-item .qa-header {
     font-weight: bold;
@@ -818,7 +818,7 @@ body {
     margin-bottom: 5px;
 }
 .qa-item .qa-a {
-    color: #28a745;
+    color: #000;
     font-weight: 500;
 }
 .overall-evaluation-item {
@@ -906,29 +906,26 @@ hr {
 /* Wrapper for the original assessment results to add padding */
 .assessment-results-section {
     padding: 30px 40px; /* Re-apply original container padding */
-    /* Re-apply original font for readability of results */
-    font-family: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Century Gothic', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
 }
 
 /* New style for score container */
 #capabilities-score-container {
-    text-align: center;
+    text-align: left;
     margin: 25px 0;
-    padding: 20px;
-    background-color: #e9ecef;
-    border-radius: 8px;
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
 }
 
-#capabilities-score-container .score-title {
+#capabilities-score-container .score-line {
     font-size: 1.2em;
-    font-weight: 600;
-    color: #495057;
-    margin: 0 0 10px 0;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 10px;
 }
 
 #capabilities-score-container .score-value {
-    font-size: 2.5em;
-    font-weight: bold;
     color: #ff8000;
 }
 
@@ -975,4 +972,33 @@ hr {
 /* Ensure h3 elements within the report-footer are white */
 #completion-area .report-footer h3 {
     color: #fff;
+}
+
+/* Layout for the overall summary block */
+#overall-summary-block {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+#overall-summary-block .summary-left {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+}
+
+#overall-summary-block .summary-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#capabilities-chart-container {
+    width: 18rem;
+    flex-shrink: 0;
+}
+
+#capabilities-chart-container canvas {
+    width: 100% !important;
+    height: 100% !important;
 }
