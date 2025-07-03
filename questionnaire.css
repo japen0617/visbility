@@ -245,6 +245,7 @@ body {
     }
     .assessment-results-section .centered-h3 {
         text-align: center;
+        color: #000;
     }
     .assessment-results-section .h3-subtitle {
         font-size: 0.7em;
@@ -731,6 +732,7 @@ body {
 }
 .assessment-results-section .centered-h3 {
     text-align: center;
+    color: #000;
 }
 .assessment-results-section .h3-subtitle {
     font-size: 0.7em;
