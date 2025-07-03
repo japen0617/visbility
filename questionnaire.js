@@ -293,6 +293,19 @@ const submitStatusEl = document.getElementById('submit-status');
         loadQuestion();
     }
 
+    function initReport() {
+        const storedUserInfo = localStorage.getItem('assessmentUserInfo');
+        const storedAnswers = localStorage.getItem('assessmentAnswers');
+        if (!storedUserInfo || !storedAnswers) {
+            alert('無法取得評估資料，將返回首頁。');
+            window.location.href = 'index.html';
+            return;
+        }
+        userInfo = JSON.parse(storedUserInfo);
+        Object.assign(userAnswers, JSON.parse(storedAnswers));
+        displayResultsAndRecommendations();
+    }
+
     function updateProgress() {
         const steps = progressContainerEl.children;
         Array.from(steps).forEach((step, index) => {
@@ -381,10 +394,8 @@ const submitStatusEl = document.getElementById('submit-status');
     }
 
     function showCompletionMessage() {
-        quizAreaEl.style.display = 'none';
-        completionAreaEl.style.display = 'block';
-        updateProgress(); // 將進度條更新到最終完成狀態
-        displayResultsAndRecommendations();
+        localStorage.setItem('assessmentAnswers', JSON.stringify(userAnswers));
+        window.location.href = 'report.html';
     }
 
     function calculateModuleRisk(moduleName) {
@@ -729,25 +740,29 @@ const submitStatusEl = document.getElementById('submit-status');
         generateReportPdfBase64().then(uploadPdfBase64);
     }
     // --- EVENT LISTENERS ---
-    nextButton.addEventListener('click', () => {
-        const selectedValue = getSelectedAnswer();
-        if (!selectedValue) { 
-            alert('請選擇一個選項！');
-            return;
-        }
-        
-        const currentQuestionCode = questions[currentQuestionIndex].code;
-        userAnswers[currentQuestionCode] = selectedValue;
-        currentQuestionIndex++;
-        loadQuestion();
-    });
+    if (nextButton) {
+        nextButton.addEventListener('click', () => {
+            const selectedValue = getSelectedAnswer();
+            if (!selectedValue) {
+                alert('請選擇一個選項！');
+                return;
+            }
 
-    prevButton.addEventListener('click', () => {
-        if (currentQuestionIndex > 0) {
-            currentQuestionIndex--;
+            const currentQuestionCode = questions[currentQuestionIndex].code;
+            userAnswers[currentQuestionCode] = selectedValue;
+            currentQuestionIndex++;
             loadQuestion();
-        }
-    });
+        });
+    }
+
+    if (prevButton) {
+        prevButton.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        });
+    }
 
     const downloadPdfBtn = document.getElementById('download-pdf-btn');
     if (downloadPdfBtn) {
@@ -755,5 +770,9 @@ const submitStatusEl = document.getElementById('submit-status');
     }
 
     // --- INITIALIZATION ---
-    initQuiz();
+    if (quizAreaEl) {
+        initQuiz();
+    } else {
+        initReport();
+    }
 });
